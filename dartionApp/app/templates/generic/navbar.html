@@ -1,0 +1,61 @@
+{% load static %}
+
+<style>
+    .nav-bar-user-action {
+        font-size: 18px;
+        color: #fff;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+    }
+
+    button.userButton:hover {
+        background-color: #FF6501;
+    }
+
+    a.userButtonMenu:hover {
+        background-color: #FF6501;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#3e474f; ">
+    <a class="nav-link" href="{% url 'home' %}"
+       style="font-size: larger; font-family: ui-rounded; font-weight: bold; color: #ffffff;">DARTION</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+
+            <a class="nav-item nav-link menuButtons {% if request.path == '/about/' %}activeMenu{% endif %}" href="{% url 'about' %}">About
+                <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link menuButtons {% if request.path == '/products/' %}activeMenu{% endif %}"
+               href="{% url 'products' %}">Products</a>
+            <a class="nav-item nav-link menuButtons {% if request.path == '/contact/' %}activeMenu{% endif %}"
+               href="{% url 'contact' %}">Contact</a>
+        </div>
+
+    </div>
+    <div class="singInAction">
+        {#  <span class="nav-bar-user-action">{{request.user}}</span>#}
+
+        {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="btn dropdown-toggle userButton" style="color: #FF6501;" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span><img src="{% static 'images/userIcon.png' %}"></span><span
+                        class="nav-bar-user-action">{{ request.user.first_name }}</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item userButtonMenu" href="#">My Account</a>
+                    <a class="dropdown-item userButtonMenu" href="#">Another action</a>
+                    <a class="dropdown-item userButtonMenu" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <input class="signinButton appColorLight" type="button" onclick="window.location.href='{% url "login" %}';" value="Sign in?" />
+
+        {% endif %}
+    </div>
+
+</nav>

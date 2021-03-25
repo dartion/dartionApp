@@ -1,0 +1,28 @@
+version: "3.6"
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/dartionApp
+    ports:
+      - "8000:8000"
+      - "25:25"
+    depends_on:
+      - db
+    networks:
+      - app-net
+  db:
+    image: mysql:5.7.32
+    ports:
+      - "3307:3306"
+    networks:
+      - app-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dartionApp
+    command:
+      --disable-partition-engine-check
+
+networks:
+  app-net:
