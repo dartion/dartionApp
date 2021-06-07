@@ -35,7 +35,7 @@ SECRET_KEY = 'p(hh&lw#j71l4q)upe#q7sbpr@9fnjfft#(wwxfxgu9p0%-b!^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', ]
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -52,7 +52,7 @@ THIRD_PARTY_APPS = [
     'social_django',
     'django_filters'
 ]
-
+s
 LOCAL_APPS = []
 
 # Application definition
@@ -85,7 +85,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'dartionApp.urls'
+ROOT_URLCONF = 'baseApp.urls'
 
 TEMPLATES = [
     {
@@ -109,7 +109,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 
-WSGI_APPLICATION = 'dartionApp.wsgi.application'
+WSGI_APPLICATION = 'baseApp.wsgi.application'
 
 
 # Database
@@ -124,16 +124,25 @@ WSGI_APPLICATION = 'dartionApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config['DEFAULT']['DB_NAME'],
-        'USER': config['DEFAULT']['DB_USER'],
-        'PASSWORD': config['DEFAULT']['DB_PASSWORD'],
-        'HOST': 'db',
-        'PORT': '3306',
-        'CHARSET': 'utf8',
-        'COLLATION': 'utf8_bin',
-    },
+        'ENGINE':   'django_cockroachdb',
+        'USER':     'dartion_app_db_user',
+         # 'PASSWORD': '<Enter your database password here>',
+        'HOST':     'db',
+        'PORT':     '26257',
+        'NAME':     'dartion_app_db',
+
+    }
 }
+# MySQL
+# 'ENGINE': 'django.db.backends.mysql',
+# 'NAME': config['DEFAULT']['DB_NAME'],
+# 'USER': config['DEFAULT']['DB_USER'],
+# 'PASSWORD': config['DEFAULT']['DB_PASSWORD'],
+# 'HOST': 'db',
+# 'PORT': '3306',
+# 'CHARSET': 'utf8',
+# 'COLLATION': 'utf8_bin',
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.github.GithubOAuth2',
@@ -196,11 +205,11 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 't6ampkgfmJoZobLcImjOsW4e'
 EMAIL_SENDER = "noreply@dartion.com.au"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "mail.tpg.com.au"
+EMAIL_HOST = config['EMAIL']['HOST']
 EMAIL_USE_TLS = True
-EMAIL_PORT = 25
+EMAIL_PORT = config['EMAIL']['PORT']
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 #App environment
-ENV='development'
+ENV = config['ENV']['CURRENT']
 #ENV='production'

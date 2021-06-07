@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
-from  dartionApp.settings import ALLOWED_HOSTS
+from  baseApp.settings import ALLOWED_HOSTS
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dartion-app-cockroach-db
+  labels:
+    name: database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      service: cockroach
+  template:
+    metadata:
+      labels:
+        service: cockroach
+    spec:
+      containers:
+      - name: cockroach
+        image: cockroachdb/cockroach:v20.1.0
+        env:
+#          - name: POSTGRES_USER
+#            valueFrom:
+#              secretKeyRef:
+#                name: postgres-credentials
+#                key: user
+#          - name: POSTGRES_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: postgres-credentials
+#                key: password
+        volumeMounts:
+          - name: database-volume-mount
+            mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: database-volume-mount
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      restartPolicy: Always
